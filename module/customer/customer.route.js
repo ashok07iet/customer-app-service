@@ -5,6 +5,7 @@
  */
 (function(){
     var customerService=require('./customer.service');
+    var orderService=require('../order/order.service');
     function setResponse(req, res, next) {
         res.status(req.statusCode ? req.statusCode : 200).json(req.result);
     }
@@ -14,7 +15,8 @@
     router.route('/:id').get(customerService.getCustomer,setResponse);
     router.route('/').post(customerService.createCustomer,setResponse);
     router.route('/').put(customerService.updateCustomer,setResponse);
-     router.route('/:id').delete(customerService.deleteCustomer,setResponse);
+    router.route('/:id').delete(customerService.deleteCustomer,setResponse);
+    router.route('/:id/orders').get(orderService.getOrders,setResponse);
     module.exports=router;
 })();
 

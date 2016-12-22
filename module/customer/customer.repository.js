@@ -12,6 +12,9 @@
         this.customer=function(id){
            return Customers.find({customerId:id}).exec();  
         };
+        this.customerByName=function(name){
+           return Customers.find({'FirstName':name}).exec();  
+        };
         this.create=function(cus){
             var customer=new Customers(cus);
            return customer.save();

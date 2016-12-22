@@ -8,6 +8,12 @@
       var customerRepo=require('./customer.repository');
       vm=this;
       vm.getCustomers=function(req,res,next){
+          if(req.query.name){
+            customerRepo.customerByName(req.query.name).then(function(customer){
+               req.result=customer[0];
+               next();
+          });   
+          }
           customerRepo.customerList().then(function(customer){
                req.result=customer;
                next();
