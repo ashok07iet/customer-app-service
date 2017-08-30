@@ -5,18 +5,20 @@
  */
 (function(){
     var customerService=require('./customer.service');
-    var orderService=require('../order/order.service');
     function setResponse(req, res, next) {
         res.status(req.statusCode ? req.statusCode : 200).json(req.result);
     }
     var express=require('express');
     var router=express.Router();
-    router.route('/').get(customerService.getCustomers,setResponse);
-    router.route('/:id').get(customerService.getCustomer,setResponse);
-    router.route('/').post(customerService.createCustomer,setResponse);
-    router.route('/').put(customerService.updateCustomer,setResponse);
-    router.route('/:id').delete(customerService.deleteCustomer,setResponse);
-    router.route('/:id/orders').get(orderService.getOrders,setResponse);
+    router.route('/')
+            .get(customerService.getCustomers, setResponse)
+            .post(customerService.createCustomer,setResponse)
+            .put(customerService.updateCustomer,setResponse)
+            .delete(customerService.deleteCustomer,setResponse);
+    router.route('/:id')
+            .get(customerService.getCustomersById, setResponse)
+            .put(customerService.updateCustomerById,setResponse)
+            .delete(customerService.deleteCustomerById,setResponse);
     module.exports=router;
 })();
 

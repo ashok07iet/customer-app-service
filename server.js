@@ -17,10 +17,12 @@ app.use(bodyParser.json());
 
 var port = process.env.PORT || 8080;        // set our port
 
+
+// more routes for our API will happen here
+
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 app.use('/customer-service', require('./midleware/app.route'));
-
 
 // START THE SERVER
 // =============================================================================

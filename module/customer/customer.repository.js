@@ -9,21 +9,24 @@
         this.customerList=function(){
           return Customers.find({}).exec();  
         };
-        this.customer=function(id){
-           return Customers.find({customerId:id}).exec();  
+        this.findById = function (id) {
+            return Customers.find({_id: id}).exec();
         };
-        this.customerByName=function(name){
-           return Customers.find({'FirstName':name}).exec();  
+        this.createCustomer=function(customer){
+           return new Customers(customer).save(); 
         };
-        this.create=function(cus){
-            var customer=new Customers(cus);
-           return customer.save();
+        this.updateCustomer=function(query,data){
+           return Customers.findOneAndUpdate(query,data); 
         };
-        this.update=function(cus){
-            return Customers.findOneAndUpdate({customerId:cus.customerId},cus);  
+         this.updateCustomerById=function(id,customer){
+           return Customers.findByIdAndUpdate(id,customer); 
         };
-         this.delete=function(id){
-            return Customers.find({customerId:id}).remove().exec();  
+        
+        this.deleteCustomerById = function (id) {
+            return Customers.findByIdAndRemove(id);
+        };
+         this.deleteCustomer=function(query){
+           return Customers.findOneAndRemove(query); 
         };
     }
     module.exports = new CustomersRepository();

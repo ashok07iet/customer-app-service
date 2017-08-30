@@ -8,44 +8,54 @@
       var customerRepo=require('./customer.repository');
       vm=this;
       vm.getCustomers=function(req,res,next){
-          if(req.query.name){
-            customerRepo.customerByName(req.query.name).then(function(customer){
-               req.result=customer[0];
-               next();
-          });   
-          }
           customerRepo.customerList().then(function(customer){
                req.result=customer;
                next();
           });
       };
-      vm.getCustomer=function(req,res,next){
-          var id=req.param('id');
-          customerRepo.customer(id).then(function(customer){
-               req.result=customer;
-               next();
-          });
-      };
       vm.createCustomer=function(req,res,next){
-          var body=req.body;
-          customerRepo.create(body).then(function(customer){
-               req.result=customer;
-               next();
+          var customer=req.body;
+          customerRepo.createCustomer(customer).then(function(result){
+              req.result=result;
+              next();
+          });    
+      };
+      vm.getCustomersById=function(req,res,next){
+          var id=req.params.id;
+          customerRepo.findById(id).then(function(result){
+              req.result=result;
+              next();
           });
       };
-       vm.updateCustomer=function(req,res,next){
-          var body=req.body;
-          customerRepo.update(body).then(function(customer){
-               req.result=customer;
-               next();
-          });
+      vm.updateCustomer=function(req,res,next){
+          var customer=req.body.data;
+          var query=req.body.query;
+          customerRepo.updateCustomer(query,customer).then(function(result){
+              req.result=result;
+              next();
+          });    
+      };
+       vm.updateCustomerById=function(req,res,next){
+          var customer=req.body;
+          var id=req.param.id;
+          customerRepo.updateCustomerById(id,customer).then(function(result){
+              req.result=result;
+              next();
+          });    
+      };
+      vm.deleteCustomerById=function(req,res,next){
+          var id=req.params.id;
+          customerRepo.deleteCustomerById(id).then(function(result){
+              req.result=result;
+              next();
+          });    
       };
        vm.deleteCustomer=function(req,res,next){
-           var id=req.param('id');
-          customerRepo.delete(id).then(function(customer){
-               req.result=customer;
-               next();
-          });
+          var query=req.body.query;
+          customerRepo.deleteCustomer(query).then(function(result){
+              req.result=result;
+              next();
+          });    
       };
   }  
   module.exports=new CustomerService();  
